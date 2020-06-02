@@ -107,10 +107,13 @@ def get_platform():
             ret["arch"] = "mipsel_ucs4"
         elif system == 12:
             ret["os"] = "linux"
-            ret["arch"] = "linux_aarch64_ucs2"
+            ret["arch"] = "aarch64_ucs2"
         elif system == 13:
             ret["os"] = "linux"
-            ret["arch"] = "linux_aarch64_ucs4"
+            ret["arch"] = "aarch64_ucs4"
+        elif system == 14:
+            ret["os"] = "windows"
+            ret["arch"] = "x64"
     else:
 
         ret = {
@@ -157,7 +160,7 @@ def get_system(ret):
     ret["message"] = ['', '']
 
     if ret["os"] == 'windows':
-        ret["system"] = 'windows'
+        ret["system"] = 'windows_' + ret['arch']
         ret["message"] = ['Windows has static compiled python-libtorrent included.',
                           'You should install "script.module.libtorrent" from "MyShows.me Kodi Repo"']
     elif ret["os"] == "linux" and ret["arch"] == "x64":
@@ -172,7 +175,7 @@ def get_system(ret):
         ret["system"] = 'linux_' + ret["arch"]
         ret["message"] = ['Linux has static compiled python-libtorrent included but it didn\'t work.',
                           'You should install it by "sudo apt-get install python-libtorrent"']
-    elif ret["os"] == "linux" and ("arm" or "mips" in ret["arch"]):
+    elif ret["os"] == "linux" and ("arm" in ret["arch"] or 'mips' in ret["arch"]):
         ret["system"] = 'linux_'+ret["arch"]
         ret["message"] = ['As far as I know you can compile python-libtorrent for ARMv6-7.',
                           'You should search for "OneEvil\'s OpenELEC libtorrent" or use Ace Stream.']
